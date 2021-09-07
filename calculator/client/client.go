@@ -8,6 +8,8 @@ import (
 
 	"github.com/rsorage/grpc-go-course/calculator/calculatorpb"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 func main() {
@@ -20,8 +22,9 @@ func main() {
 
 	c := calculatorpb.NewCalculatorServiceClient(cc)
 
-	doUnary(c)
-	doServerStreaming(c)
+	// doUnary(c)
+	// doServerStreaming(c)
+	calcSquareRoot(c)
 }
 
 func doUnary(c calculatorpb.CalculatorServiceClient) {
@@ -61,4 +64,30 @@ func doServerStreaming(c calculatorpb.CalculatorServiceClient) {
 
 		log.Printf("Factor received: %d", response.GetResult())
 	}
+}
+
+func calcSquareRoot(c calculatorpb.CalculatorServiceClient) {
+	number := -8.0
+
+	request := &calculatorpb.SquareRootRequest{
+		Number: number,
+	}
+
+	response, err := c.SquareRoot(context.Background(), request)
+	if err != nil {
+		respErr, ok := status.FromError(err)
+		if ok {
+			// actual error from gRPC
+			log.Printf("Server sent --> %s", respErr.Message())
+			if respErr.Code() == codes.InvalidArgument {
+				log.Println("We probably sent a negative number!")
+			}
+			return
+		} else {
+			log.Fatalf("Error calculating square root: %v", err)
+			return
+		}
+	}
+
+	log.Printf("Square root of %f is %f\n", number, response.GetResult())
 }

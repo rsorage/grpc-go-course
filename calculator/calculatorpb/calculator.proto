@@ -20,7 +20,21 @@ message DecomposePrimeNumberResponse {
     int32 result = 1;
 }
 
+message SquareRootRequest {
+    double number = 1;
+}
+
+message SquareRootResponse {
+    double result = 1;
+}
+
 service CalculatorService {
     rpc Sum (SumRequest) returns (SumResponse) {};
+
     rpc DecomposePrimeNumber(DecomposePrimeNumberRequest) returns (stream DecomposePrimeNumberResponse) {};
+
+    // error handling
+    // this RPC will throw an exception if the sent number is negative
+    // the error being sent is of type INVALID_ARGUMENT
+    rpc SquareRoot(SquareRootRequest) returns (SquareRootResponse) {};
 }
