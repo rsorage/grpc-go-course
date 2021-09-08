@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/rsorage/grpc-go-course/blog/blogpb"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -24,12 +25,13 @@ type server struct{}
 
 type blogItem struct {
 	ID       primitive.ObjectID `bson:"_id,omitempty"`
-	AuthorID string             `bson:"author_id"`
-	Content  string             `bson:"content"`
-	Title    string             `bson:"title"`
+	AuthorID string             `bson:"author_id,omitempty"`
+	Content  string             `bson:"content,omitempty"`
+	Title    string             `bson:"title,omitempty"`
 }
 
 func (*server) CreateBlog(ctx context.Context, req *blogpb.CreateBlogRequest) (*blogpb.CreateBlogResponse, error) {
+	log.Printf("Create blog request: %v\n", req)
 	blog := req.GetBlog()
 
 	data := blogItem{
@@ -54,6 +56,36 @@ func (*server) CreateBlog(ctx context.Context, req *blogpb.CreateBlogRequest) (*
 			AuthorId: blog.GetAuthorId(),
 			Content:  blog.GetContent(),
 			Title:    blog.Title,
+		},
+	}, nil
+}
+
+func (*server) ReadBlog(ctx context.Context, req *blogpb.ReadBlogRequest) (*blogpb.ReadBlogResponse, error) {
+	log.Printf("Read blog request: %v\n", req)
+
+	oid, err := primitive.ObjectIDFromHex(req.GetId())
+	if err != nil {
+		log.Printf("Impossible to convert to ObjectID: %s\n", req.GetId())
+		return nil, status.Errorf(codes.InvalidArgument, fmt.Sprintf("Impossible to convert to ObjectID: %s\n", req.GetId()))
+	}
+
+	var blog blogItem
+	filter := bson.M{"_id": oid}
+
+	log.Println("Searching the DB...")
+	err = collection.FindOne(context.Background(), filter).Decode(&blog)
+	if err != nil {
+		log.Printf("id='%s' No blog item found!\n", oid.Hex())
+		return nil, status.Errorf(codes.NotFound, fmt.Sprintf("id='%s' No blog item found!", oid.Hex()))
+	}
+
+	log.Println("BlogItem retrieved from DB!")
+	return &blogpb.ReadBlogResponse{
+		Blog: &blogpb.Blog{
+			Id:       blog.ID.Hex(),
+			AuthorId: blog.AuthorID,
+			Title:    blog.Title,
+			Content:  blog.Content,
 		},
 	}, nil
 }
