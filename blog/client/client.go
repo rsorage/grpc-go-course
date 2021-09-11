@@ -20,7 +20,8 @@ func main() {
 	c := blogpb.NewBlogServiceClient(cc)
 
 	// createBlog(c)
-	readBlog(c, "6137cbfe24772434d19bc92")
+	// readBlog(c, "6137cbfe24772434d19bc92")
+	updateBlog(c)
 }
 
 func createBlog(c blogpb.BlogServiceClient) {
@@ -50,4 +51,27 @@ func readBlog(c blogpb.BlogServiceClient, id string) {
 	}
 
 	log.Printf("Blog item retrieved: %v\n", res)
+}
+
+func updateBlog(c blogpb.BlogServiceClient) {
+	id := "6137d413ca5e9c29f1c44df5"
+
+	log.Printf("id='%s' Reading blog...\n", id)
+
+	data := &blogpb.UpdateBlogRequest{
+		Blog: &blogpb.Blog{
+			Id:       id,
+			AuthorId: "rsorage",
+			Title:    "My updated blog title",
+			Content:  "Updated content...",
+		},
+	}
+
+	req, err := c.UpdateBlog(context.Background(), data)
+	if err != nil {
+		log.Printf("Error updating blog item: %v\n", err)
+		return
+	}
+
+	log.Printf("id='%s' Blog item updated: %v", id, req)
 }

@@ -30,6 +30,15 @@ type blogItem struct {
 	Title    string             `bson:"title,omitempty"`
 }
 
+func (blog blogItem) toBlogPb() *blogpb.Blog {
+	return &blogpb.Blog{
+		Id:       blog.ID.Hex(),
+		AuthorId: blog.AuthorID,
+		Title:    blog.Title,
+		Content:  blog.Content,
+	}
+}
+
 func (*server) CreateBlog(ctx context.Context, req *blogpb.CreateBlogRequest) (*blogpb.CreateBlogResponse, error) {
 	log.Printf("Create blog request: %v\n", req)
 	blog := req.GetBlog()
@@ -80,12 +89,38 @@ func (*server) ReadBlog(ctx context.Context, req *blogpb.ReadBlogRequest) (*blog
 	}
 
 	log.Println("BlogItem retrieved from DB!")
-	return &blogpb.ReadBlogResponse{
+	return &blogpb.ReadBlogResponse{Blog: blog.toBlogPb()}, nil
+}
+
+func (*server) UpdateBlog(ctx context.Context, req *blogpb.UpdateBlogRequest) (*blogpb.UpdateBlogResponse, error) {
+	blog := req.GetBlog()
+
+	log.Printf("Updating blog item: %v\n", blog)
+
+	oid, err := primitive.ObjectIDFromHex(blog.GetId())
+	if err != nil {
+		log.Printf("Impossible to convert to ObjectId: %s", blog.GetId())
+		return nil, status.Errorf(codes.InvalidArgument, fmt.Sprintf("id='%s' Cannot parse to ObjectId.", blog.GetId()))
+	}
+
+	data := &blogItem{}
+	filter := bson.M{"_id": oid}
+	// AuthorID: blog.GetAuthorId(),
+	// Title:    blog.GetTitle(),
+	// Content:  blog.GetContent(),
+
+	res := collection.FindOne(context.Background(), filter)
+	if err := res.Decode(data); err != nil {
+		log.Printf("id='%s'\tImpossible to update blog item: %v", oid.Hex(), err)
+		return nil, status.Errorf(codes.NotFound, fmt.Sprintf("id='%s' Impossible to find blog item!", err))
+	}
+
+	return &blogpb.UpdateBlogResponse{
 		Blog: &blogpb.Blog{
-			Id:       blog.ID.Hex(),
-			AuthorId: blog.AuthorID,
-			Title:    blog.Title,
-			Content:  blog.Content,
+			Id:       oid.Hex(),
+			AuthorId: blog.GetAuthorId(),
+			Title:    blog.GetTitle(),
+			Content:  blog.GetContent(),
 		},
 	}, nil
 }
