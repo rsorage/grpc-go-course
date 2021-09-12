@@ -38,7 +38,8 @@ func main() {
 
 	// doUnary(c)
 	// doServerStreaming(c)
-	doClientStreaming(c)
+	// doClientStreaming(c)
+	doBiDiStreaming(c)
 	// doUnaryWithDeadline(c, 5*time.Second)
 	// doUnaryWithDeadline(c, 1*time.Second)
 }
@@ -135,6 +136,79 @@ func doClientStreaming(c greetpb.GreetServiceClient) {
 	}
 
 	log.Printf("Received LongGreet response: %v", res)
+}
+
+func doBiDiStreaming(c greetpb.GreetServiceClient) {
+	log.Println("Starting to do BiDi Streaming...")
+
+	requests := []*greetpb.GreetEveryoneRequest{
+		{
+			Greeting: &greetpb.Greeting{
+				FirstName: "Ramon",
+			},
+		},
+		{
+			Greeting: &greetpb.Greeting{
+				FirstName: "Juliana",
+			},
+		},
+		{
+			Greeting: &greetpb.Greeting{
+				FirstName: "Matteus",
+			},
+		},
+		{
+			Greeting: &greetpb.Greeting{
+				FirstName: "Sandra",
+			},
+		},
+	}
+
+	stream, err := c.GreetEveryone(context.Background())
+
+	if err == io.EOF {
+		log.Printf("Server closed bidi streaming!")
+		return
+	}
+	if err != nil {
+		log.Fatalf("Error opening streaming with server: %v\n", err)
+		return
+	}
+
+	ch := make(chan string)
+
+	go func() {
+		for {
+			res, err := stream.Recv()
+			if err == io.EOF {
+				log.Printf("Streaming closed by server!")
+				break
+			}
+			if err != nil {
+				log.Fatalf("Error receiving message from server: %v\n", err)
+				break
+			}
+			ch <- res.GetResult()
+		}
+		close(ch)
+	}()
+
+	go func() {
+		for _, req := range requests {
+			if err := stream.Send(req); err != nil {
+				log.Fatalf("Error while sending message to server: %v\n", err)
+				break
+			}
+			time.Sleep(500 * time.Millisecond)
+			log.Printf("Sent greeting to %s", req.GetGreeting().GetFirstName())
+		}
+
+		stream.CloseSend()
+	}()
+
+	for msg := range ch {
+		log.Printf("Received from server: %v", msg)
+	}
 }
 
 func doUnaryWithDeadline(c greetpb.GreetServiceClient, timeout time.Duration) {
