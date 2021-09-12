@@ -20,6 +20,14 @@ message DecomposePrimeNumberResponse {
     int32 result = 1;
 }
 
+message AverageRequest {
+    int32 number = 1;
+}
+
+message AverageResponse {
+    double result = 1;
+}
+
 message SquareRootRequest {
     double number = 1;
 }
@@ -32,6 +40,8 @@ service CalculatorService {
     rpc Sum (SumRequest) returns (SumResponse) {};
 
     rpc DecomposePrimeNumber(DecomposePrimeNumberRequest) returns (stream DecomposePrimeNumberResponse) {};
+
+    rpc Average(stream AverageRequest) returns (AverageResponse) {};
 
     // error handling
     // this RPC will throw an exception if the sent number is negative

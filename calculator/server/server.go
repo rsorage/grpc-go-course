@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
 	"math"
 	"net"
@@ -43,6 +44,37 @@ func (*server) DecomposePrimeNumber(req *calculatorpb.DecomposePrimeNumberReques
 	}
 
 	return nil
+}
+
+func (*server) Average(stream calculatorpb.CalculatorService_AverageServer) error {
+
+	numbers := []int32{}
+
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			log.Printf("Calculating average of: %v", numbers)
+			avg := calcAverage(numbers)
+			return stream.SendAndClose(&calculatorpb.AverageResponse{
+				Result: avg,
+			})
+		}
+		if err != nil {
+			log.Printf("Error receiving stream: %v", err)
+		}
+		log.Printf("Request received: %v", req)
+		numbers = append(numbers, req.GetNumber())
+	}
+}
+
+func calcAverage(numbers []int32) float64 {
+	var sum int32 = 0
+
+	for _, num := range numbers {
+		sum += num
+	}
+
+	return float64(sum) / float64(len(numbers))
 }
 
 func (*server) SquareRoot(ctx context.Context, req *calculatorpb.SquareRootRequest) (*calculatorpb.SquareRootResponse, error) {

@@ -220,6 +220,100 @@ func (x *DecomposePrimeNumberResponse) GetResult() int32 {
 	return 0
 }
 
+type AverageRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Number int32 `protobuf:"varint,1,opt,name=number,proto3" json:"number,omitempty"`
+}
+
+func (x *AverageRequest) Reset() {
+	*x = AverageRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_calculator_calculatorpb_calculator_proto_msgTypes[4]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AverageRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AverageRequest) ProtoMessage() {}
+
+func (x *AverageRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_calculator_calculatorpb_calculator_proto_msgTypes[4]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AverageRequest.ProtoReflect.Descriptor instead.
+func (*AverageRequest) Descriptor() ([]byte, []int) {
+	return file_calculator_calculatorpb_calculator_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *AverageRequest) GetNumber() int32 {
+	if x != nil {
+		return x.Number
+	}
+	return 0
+}
+
+type AverageResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Result float64 `protobuf:"fixed64,1,opt,name=result,proto3" json:"result,omitempty"`
+}
+
+func (x *AverageResponse) Reset() {
+	*x = AverageResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_calculator_calculatorpb_calculator_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *AverageResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AverageResponse) ProtoMessage() {}
+
+func (x *AverageResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_calculator_calculatorpb_calculator_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AverageResponse.ProtoReflect.Descriptor instead.
+func (*AverageResponse) Descriptor() ([]byte, []int) {
+	return file_calculator_calculatorpb_calculator_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *AverageResponse) GetResult() float64 {
+	if x != nil {
+		return x.Result
+	}
+	return 0
+}
+
 type SquareRootRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -231,7 +325,7 @@ type SquareRootRequest struct {
 func (x *SquareRootRequest) Reset() {
 	*x = SquareRootRequest{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_calculator_calculatorpb_calculator_proto_msgTypes[4]
+		mi := &file_calculator_calculatorpb_calculator_proto_msgTypes[6]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -244,7 +338,7 @@ func (x *SquareRootRequest) String() string {
 func (*SquareRootRequest) ProtoMessage() {}
 
 func (x *SquareRootRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_calculator_calculatorpb_calculator_proto_msgTypes[4]
+	mi := &file_calculator_calculatorpb_calculator_proto_msgTypes[6]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -257,7 +351,7 @@ func (x *SquareRootRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SquareRootRequest.ProtoReflect.Descriptor instead.
 func (*SquareRootRequest) Descriptor() ([]byte, []int) {
-	return file_calculator_calculatorpb_calculator_proto_rawDescGZIP(), []int{4}
+	return file_calculator_calculatorpb_calculator_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *SquareRootRequest) GetNumber() float64 {
@@ -278,7 +372,7 @@ type SquareRootResponse struct {
 func (x *SquareRootResponse) Reset() {
 	*x = SquareRootResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_calculator_calculatorpb_calculator_proto_msgTypes[5]
+		mi := &file_calculator_calculatorpb_calculator_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -291,7 +385,7 @@ func (x *SquareRootResponse) String() string {
 func (*SquareRootResponse) ProtoMessage() {}
 
 func (x *SquareRootResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_calculator_calculatorpb_calculator_proto_msgTypes[5]
+	mi := &file_calculator_calculatorpb_calculator_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -304,7 +398,7 @@ func (x *SquareRootResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SquareRootResponse.ProtoReflect.Descriptor instead.
 func (*SquareRootResponse) Descriptor() ([]byte, []int) {
-	return file_calculator_calculatorpb_calculator_proto_rawDescGZIP(), []int{5}
+	return file_calculator_calculatorpb_calculator_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *SquareRootResponse) GetResult() float64 {
@@ -332,32 +426,42 @@ var file_calculator_calculatorpb_calculator_proto_rawDesc = []byte{
 	0x0a, 0x1c, 0x44, 0x65, 0x63, 0x6f, 0x6d, 0x70, 0x6f, 0x73, 0x65, 0x50, 0x72, 0x69, 0x6d, 0x65,
 	0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16,
 	0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06,
-	0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x2b, 0x0a, 0x11, 0x53, 0x71, 0x75, 0x61, 0x72, 0x65,
-	0x52, 0x6f, 0x6f, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x6e,
-	0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x01, 0x52, 0x06, 0x6e, 0x75, 0x6d,
-	0x62, 0x65, 0x72, 0x22, 0x2c, 0x0a, 0x12, 0x53, 0x71, 0x75, 0x61, 0x72, 0x65, 0x52, 0x6f, 0x6f,
-	0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73,
-	0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x01, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c,
-	0x74, 0x32, 0x8b, 0x02, 0x0a, 0x11, 0x43, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72,
-	0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x38, 0x0a, 0x03, 0x53, 0x75, 0x6d, 0x12, 0x16,
-	0x2e, 0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72, 0x2e, 0x53, 0x75, 0x6d, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e, 0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61,
-	0x74, 0x6f, 0x72, 0x2e, 0x53, 0x75, 0x6d, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
-	0x00, 0x12, 0x6d, 0x0a, 0x14, 0x44, 0x65, 0x63, 0x6f, 0x6d, 0x70, 0x6f, 0x73, 0x65, 0x50, 0x72,
-	0x69, 0x6d, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x27, 0x2e, 0x63, 0x61, 0x6c, 0x63,
-	0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72, 0x2e, 0x44, 0x65, 0x63, 0x6f, 0x6d, 0x70, 0x6f, 0x73, 0x65,
-	0x50, 0x72, 0x69, 0x6d, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x52, 0x65, 0x71, 0x75, 0x65,
-	0x73, 0x74, 0x1a, 0x28, 0x2e, 0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72, 0x2e,
-	0x44, 0x65, 0x63, 0x6f, 0x6d, 0x70, 0x6f, 0x73, 0x65, 0x50, 0x72, 0x69, 0x6d, 0x65, 0x4e, 0x75,
-	0x6d, 0x62, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x30, 0x01,
-	0x12, 0x4d, 0x0a, 0x0a, 0x53, 0x71, 0x75, 0x61, 0x72, 0x65, 0x52, 0x6f, 0x6f, 0x74, 0x12, 0x1d,
-	0x2e, 0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72, 0x2e, 0x53, 0x71, 0x75, 0x61,
-	0x72, 0x65, 0x52, 0x6f, 0x6f, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1e, 0x2e,
-	0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72, 0x2e, 0x53, 0x71, 0x75, 0x61, 0x72,
-	0x65, 0x52, 0x6f, 0x6f, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42,
-	0x1b, 0x5a, 0x19, 0x2e, 0x2f, 0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72, 0x2f,
-	0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72,
-	0x6f, 0x74, 0x6f, 0x33,
+	0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x28, 0x0a, 0x0e, 0x41, 0x76, 0x65, 0x72, 0x61, 0x67,
+	0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x16, 0x0a, 0x06, 0x6e, 0x75, 0x6d, 0x62,
+	0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x06, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72,
+	0x22, 0x29, 0x0a, 0x0f, 0x41, 0x76, 0x65, 0x72, 0x61, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x16, 0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x01, 0x52, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x22, 0x2b, 0x0a, 0x11, 0x53,
+	0x71, 0x75, 0x61, 0x72, 0x65, 0x52, 0x6f, 0x6f, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x16, 0x0a, 0x06, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x18, 0x01, 0x20, 0x01, 0x28, 0x01,
+	0x52, 0x06, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x22, 0x2c, 0x0a, 0x12, 0x53, 0x71, 0x75, 0x61,
+	0x72, 0x65, 0x52, 0x6f, 0x6f, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x16,
+	0x0a, 0x06, 0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x18, 0x01, 0x20, 0x01, 0x28, 0x01, 0x52, 0x06,
+	0x72, 0x65, 0x73, 0x75, 0x6c, 0x74, 0x32, 0xd3, 0x02, 0x0a, 0x11, 0x43, 0x61, 0x6c, 0x63, 0x75,
+	0x6c, 0x61, 0x74, 0x6f, 0x72, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x38, 0x0a, 0x03,
+	0x53, 0x75, 0x6d, 0x12, 0x16, 0x2e, 0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72,
+	0x2e, 0x53, 0x75, 0x6d, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x17, 0x2e, 0x63, 0x61,
+	0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72, 0x2e, 0x53, 0x75, 0x6d, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x6d, 0x0a, 0x14, 0x44, 0x65, 0x63, 0x6f, 0x6d, 0x70,
+	0x6f, 0x73, 0x65, 0x50, 0x72, 0x69, 0x6d, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x12, 0x27,
+	0x2e, 0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72, 0x2e, 0x44, 0x65, 0x63, 0x6f,
+	0x6d, 0x70, 0x6f, 0x73, 0x65, 0x50, 0x72, 0x69, 0x6d, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c,
+	0x61, 0x74, 0x6f, 0x72, 0x2e, 0x44, 0x65, 0x63, 0x6f, 0x6d, 0x70, 0x6f, 0x73, 0x65, 0x50, 0x72,
+	0x69, 0x6d, 0x65, 0x4e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x00, 0x30, 0x01, 0x12, 0x46, 0x0a, 0x07, 0x41, 0x76, 0x65, 0x72, 0x61, 0x67, 0x65,
+	0x12, 0x1a, 0x2e, 0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72, 0x2e, 0x41, 0x76,
+	0x65, 0x72, 0x61, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1b, 0x2e, 0x63,
+	0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72, 0x2e, 0x41, 0x76, 0x65, 0x72, 0x61, 0x67,
+	0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x28, 0x01, 0x12, 0x4d, 0x0a,
+	0x0a, 0x53, 0x71, 0x75, 0x61, 0x72, 0x65, 0x52, 0x6f, 0x6f, 0x74, 0x12, 0x1d, 0x2e, 0x63, 0x61,
+	0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72, 0x2e, 0x53, 0x71, 0x75, 0x61, 0x72, 0x65, 0x52,
+	0x6f, 0x6f, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x1e, 0x2e, 0x63, 0x61, 0x6c,
+	0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72, 0x2e, 0x53, 0x71, 0x75, 0x61, 0x72, 0x65, 0x52, 0x6f,
+	0x6f, 0x74, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42, 0x1b, 0x5a, 0x19,
+	0x2e, 0x2f, 0x63, 0x61, 0x6c, 0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72, 0x2f, 0x63, 0x61, 0x6c,
+	0x63, 0x75, 0x6c, 0x61, 0x74, 0x6f, 0x72, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x33,
 }
 
 var (
@@ -372,24 +476,28 @@ func file_calculator_calculatorpb_calculator_proto_rawDescGZIP() []byte {
 	return file_calculator_calculatorpb_calculator_proto_rawDescData
 }
 
-var file_calculator_calculatorpb_calculator_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_calculator_calculatorpb_calculator_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_calculator_calculatorpb_calculator_proto_goTypes = []interface{}{
 	(*SumRequest)(nil),                   // 0: calculator.SumRequest
 	(*SumResponse)(nil),                  // 1: calculator.SumResponse
 	(*DecomposePrimeNumberRequest)(nil),  // 2: calculator.DecomposePrimeNumberRequest
 	(*DecomposePrimeNumberResponse)(nil), // 3: calculator.DecomposePrimeNumberResponse
-	(*SquareRootRequest)(nil),            // 4: calculator.SquareRootRequest
-	(*SquareRootResponse)(nil),           // 5: calculator.SquareRootResponse
+	(*AverageRequest)(nil),               // 4: calculator.AverageRequest
+	(*AverageResponse)(nil),              // 5: calculator.AverageResponse
+	(*SquareRootRequest)(nil),            // 6: calculator.SquareRootRequest
+	(*SquareRootResponse)(nil),           // 7: calculator.SquareRootResponse
 }
 var file_calculator_calculatorpb_calculator_proto_depIdxs = []int32{
 	0, // 0: calculator.CalculatorService.Sum:input_type -> calculator.SumRequest
 	2, // 1: calculator.CalculatorService.DecomposePrimeNumber:input_type -> calculator.DecomposePrimeNumberRequest
-	4, // 2: calculator.CalculatorService.SquareRoot:input_type -> calculator.SquareRootRequest
-	1, // 3: calculator.CalculatorService.Sum:output_type -> calculator.SumResponse
-	3, // 4: calculator.CalculatorService.DecomposePrimeNumber:output_type -> calculator.DecomposePrimeNumberResponse
-	5, // 5: calculator.CalculatorService.SquareRoot:output_type -> calculator.SquareRootResponse
-	3, // [3:6] is the sub-list for method output_type
-	0, // [0:3] is the sub-list for method input_type
+	4, // 2: calculator.CalculatorService.Average:input_type -> calculator.AverageRequest
+	6, // 3: calculator.CalculatorService.SquareRoot:input_type -> calculator.SquareRootRequest
+	1, // 4: calculator.CalculatorService.Sum:output_type -> calculator.SumResponse
+	3, // 5: calculator.CalculatorService.DecomposePrimeNumber:output_type -> calculator.DecomposePrimeNumberResponse
+	5, // 6: calculator.CalculatorService.Average:output_type -> calculator.AverageResponse
+	7, // 7: calculator.CalculatorService.SquareRoot:output_type -> calculator.SquareRootResponse
+	4, // [4:8] is the sub-list for method output_type
+	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -450,7 +558,7 @@ func file_calculator_calculatorpb_calculator_proto_init() {
 			}
 		}
 		file_calculator_calculatorpb_calculator_proto_msgTypes[4].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SquareRootRequest); i {
+			switch v := v.(*AverageRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -462,6 +570,30 @@ func file_calculator_calculatorpb_calculator_proto_init() {
 			}
 		}
 		file_calculator_calculatorpb_calculator_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AverageResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_calculator_calculatorpb_calculator_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*SquareRootRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_calculator_calculatorpb_calculator_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SquareRootResponse); i {
 			case 0:
 				return &v.state
@@ -480,7 +612,7 @@ func file_calculator_calculatorpb_calculator_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_calculator_calculatorpb_calculator_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -508,6 +640,7 @@ const _ = grpc.SupportPackageIsVersion6
 type CalculatorServiceClient interface {
 	Sum(ctx context.Context, in *SumRequest, opts ...grpc.CallOption) (*SumResponse, error)
 	DecomposePrimeNumber(ctx context.Context, in *DecomposePrimeNumberRequest, opts ...grpc.CallOption) (CalculatorService_DecomposePrimeNumberClient, error)
+	Average(ctx context.Context, opts ...grpc.CallOption) (CalculatorService_AverageClient, error)
 	// error handling
 	// this RPC will throw an exception if the sent number is negative
 	// the error being sent is of type INVALID_ARGUMENT
@@ -563,6 +696,40 @@ func (x *calculatorServiceDecomposePrimeNumberClient) Recv() (*DecomposePrimeNum
 	return m, nil
 }
 
+func (c *calculatorServiceClient) Average(ctx context.Context, opts ...grpc.CallOption) (CalculatorService_AverageClient, error) {
+	stream, err := c.cc.NewStream(ctx, &_CalculatorService_serviceDesc.Streams[1], "/calculator.CalculatorService/Average", opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &calculatorServiceAverageClient{stream}
+	return x, nil
+}
+
+type CalculatorService_AverageClient interface {
+	Send(*AverageRequest) error
+	CloseAndRecv() (*AverageResponse, error)
+	grpc.ClientStream
+}
+
+type calculatorServiceAverageClient struct {
+	grpc.ClientStream
+}
+
+func (x *calculatorServiceAverageClient) Send(m *AverageRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *calculatorServiceAverageClient) CloseAndRecv() (*AverageResponse, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(AverageResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func (c *calculatorServiceClient) SquareRoot(ctx context.Context, in *SquareRootRequest, opts ...grpc.CallOption) (*SquareRootResponse, error) {
 	out := new(SquareRootResponse)
 	err := c.cc.Invoke(ctx, "/calculator.CalculatorService/SquareRoot", in, out, opts...)
@@ -576,6 +743,7 @@ func (c *calculatorServiceClient) SquareRoot(ctx context.Context, in *SquareRoot
 type CalculatorServiceServer interface {
 	Sum(context.Context, *SumRequest) (*SumResponse, error)
 	DecomposePrimeNumber(*DecomposePrimeNumberRequest, CalculatorService_DecomposePrimeNumberServer) error
+	Average(CalculatorService_AverageServer) error
 	// error handling
 	// this RPC will throw an exception if the sent number is negative
 	// the error being sent is of type INVALID_ARGUMENT
@@ -591,6 +759,9 @@ func (*UnimplementedCalculatorServiceServer) Sum(context.Context, *SumRequest) (
 }
 func (*UnimplementedCalculatorServiceServer) DecomposePrimeNumber(*DecomposePrimeNumberRequest, CalculatorService_DecomposePrimeNumberServer) error {
 	return status.Errorf(codes.Unimplemented, "method DecomposePrimeNumber not implemented")
+}
+func (*UnimplementedCalculatorServiceServer) Average(CalculatorService_AverageServer) error {
+	return status.Errorf(codes.Unimplemented, "method Average not implemented")
 }
 func (*UnimplementedCalculatorServiceServer) SquareRoot(context.Context, *SquareRootRequest) (*SquareRootResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method SquareRoot not implemented")
@@ -639,6 +810,32 @@ func (x *calculatorServiceDecomposePrimeNumberServer) Send(m *DecomposePrimeNumb
 	return x.ServerStream.SendMsg(m)
 }
 
+func _CalculatorService_Average_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(CalculatorServiceServer).Average(&calculatorServiceAverageServer{stream})
+}
+
+type CalculatorService_AverageServer interface {
+	SendAndClose(*AverageResponse) error
+	Recv() (*AverageRequest, error)
+	grpc.ServerStream
+}
+
+type calculatorServiceAverageServer struct {
+	grpc.ServerStream
+}
+
+func (x *calculatorServiceAverageServer) SendAndClose(m *AverageResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *calculatorServiceAverageServer) Recv() (*AverageRequest, error) {
+	m := new(AverageRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 func _CalculatorService_SquareRoot_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(SquareRootRequest)
 	if err := dec(in); err != nil {
@@ -675,6 +872,11 @@ var _CalculatorService_serviceDesc = grpc.ServiceDesc{
 			StreamName:    "DecomposePrimeNumber",
 			Handler:       _CalculatorService_DecomposePrimeNumber_Handler,
 			ServerStreams: true,
+		},
+		{
+			StreamName:    "Average",
+			Handler:       _CalculatorService_Average_Handler,
+			ClientStreams: true,
 		},
 	},
 	Metadata: "calculator/calculatorpb/calculator.proto",
