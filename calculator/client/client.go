@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"log"
+	"time"
 
 	"github.com/rsorage/grpc-go-course/calculator/calculatorpb"
 	"google.golang.org/grpc"
@@ -24,7 +25,8 @@ func main() {
 
 	// doUnary(c)
 	// doServerStreaming(c)
-	calcAverage(c)
+	// calcAverage(c)
+	doBiDiStreaming(c)
 	// calcSquareRoot(c)
 }
 
@@ -87,6 +89,61 @@ func calcAverage(c calculatorpb.CalculatorServiceClient) {
 	}
 
 	log.Printf("Received average: %f", res.GetResult())
+}
+
+func doBiDiStreaming(c calculatorpb.CalculatorServiceClient) {
+
+	stream, err := c.FindMaximum(context.Background())
+	if err == io.EOF {
+		return
+	}
+	if err != nil {
+		return
+	}
+
+	numbers := []int32{1, 5, 3, 6, 2, 20}
+
+	ch := make(chan struct{})
+
+	// Send stream
+	go func() {
+		for _, n := range numbers {
+			log.Printf("Sending number: %v\n", n)
+			err = stream.Send(&calculatorpb.FindMaximumRequest{
+				Number: n,
+			})
+
+			time.Sleep(200 * time.Millisecond)
+
+			if err == io.EOF {
+				break
+			}
+			if err != nil {
+				log.Fatalf("Error sending msg to stream: %v", err)
+				break
+			}
+		}
+
+		stream.CloseSend()
+	}()
+
+	// Receive stream
+	go func() {
+		for {
+			res, err := stream.Recv()
+			if err == io.EOF {
+				break
+			}
+			if err != nil {
+				break
+			}
+
+			log.Printf("New max received: %v\n", res.GetMax())
+		}
+		close(ch)
+	}()
+
+	<-ch
 }
 
 func calcSquareRoot(c calculatorpb.CalculatorServiceClient) {

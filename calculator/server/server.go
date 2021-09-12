@@ -77,6 +77,43 @@ func calcAverage(numbers []int32) float64 {
 	return float64(sum) / float64(len(numbers))
 }
 
+func (*server) FindMaximum(stream calculatorpb.CalculatorService_FindMaximumServer) error {
+	var max int32 = 0
+
+	for {
+		req, err := stream.Recv()
+		if err == io.EOF {
+			log.Println("Stream closed!")
+			return nil
+		}
+		if err != nil {
+			log.Printf("Error receiving message from stream: %v\n", err)
+			return err
+		}
+
+		number := req.GetNumber()
+
+		if number > max {
+			max = number
+			log.Printf("New max value updated: %v\n", max)
+
+			err = stream.Send(&calculatorpb.FindMaximumResponse{
+				Max: max,
+			})
+
+			if err == io.EOF {
+				log.Println("Stream closed!")
+				return nil
+			}
+			if err != nil {
+				log.Fatalf("Error sending message to stream: %v", err)
+				return err
+			}
+		}
+	}
+
+}
+
 func (*server) SquareRoot(ctx context.Context, req *calculatorpb.SquareRootRequest) (*calculatorpb.SquareRootResponse, error) {
 	log.Printf("Receiving call to SquareRoot with: %v\n", req)
 	number := req.GetNumber()
