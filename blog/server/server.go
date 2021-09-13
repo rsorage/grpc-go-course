@@ -17,6 +17,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 var collection *mongo.Collection
@@ -105,9 +106,6 @@ func (*server) UpdateBlog(ctx context.Context, req *blogpb.UpdateBlogRequest) (*
 
 	data := &blogItem{}
 	filter := bson.M{"_id": oid}
-	// AuthorID: blog.GetAuthorId(),
-	// Title:    blog.GetTitle(),
-	// Content:  blog.GetContent(),
 
 	res := collection.FindOne(context.Background(), filter)
 	if err := res.Decode(data); err != nil {
@@ -123,6 +121,33 @@ func (*server) UpdateBlog(ctx context.Context, req *blogpb.UpdateBlogRequest) (*
 			Content:  blog.GetContent(),
 		},
 	}, nil
+}
+
+func (*server) DeleteBlog(ctx context.Context, req *blogpb.DeleteBlogRequest) (*emptypb.Empty, error) {
+	id := req.GetId()
+
+	log.Printf("id='%s' Deleting blog item...", id)
+
+	oid, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		log.Fatalf("id='%s' Cannot convert into ObjectId!\n", id)
+		return nil, status.Errorf(codes.InvalidArgument, fmt.Sprintf("Impossible to convert '%s' into ObjectId", id))
+	}
+
+	filter := bson.M{"_id": oid}
+
+	res, err := collection.DeleteOne(context.Background(), filter)
+	if err != nil {
+		log.Fatalf("MongoDB error: %v", err)
+		return nil, status.Errorf(codes.Internal, fmt.Sprintf("Error deleting document: %v", err))
+	}
+	if res.DeletedCount == 0 {
+		log.Printf("id='%s' No blog item found!", id)
+		return nil, status.Errorf(codes.NotFound, fmt.Sprintf("No blog item found with id: %v", id))
+	}
+
+	log.Printf("id='%s' Blog item deleted!", id)
+	return &emptypb.Empty{}, nil
 }
 
 func main() {

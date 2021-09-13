@@ -1,6 +1,9 @@
 syntax = "proto3";
 
 package blog;
+
+import "google/protobuf/empty.proto";
+
 option go_package="./blog/blogpb";
 
 message Blog {
@@ -11,32 +14,59 @@ message Blog {
 }
 
 message CreateBlogRequest {
+    // Required. Blog item to be created.
     Blog blog = 1;
 }
 
 message CreateBlogResponse {
+    // Created blog item.
     Blog blog = 1;
 }
 
 message ReadBlogRequest {
+    //Required. Blog item ID.
     string id = 1;
 }
 
 message ReadBlogResponse {
+    // Found blog item.
     Blog blog = 1;
 }
 
 message UpdateBlogRequest {
+    // Required.
     Blog blog = 1;    
 }
 
 message UpdateBlogResponse {
+    // Updated blog item.
     Blog blog = 1;
 }
 
+message DeleteBlogRequest {
+    // Required.
+    string id = 1;
+}
 
 service BlogService {
+    // Creates a blog item.
     rpc CreateBlog (CreateBlogRequest) returns (CreateBlogResponse) {};
+    
+    // Retrieves a blog item.
+    // Returns `NOT_FOUND` if the item does not exist.
+    // Returns `INVALID_ARGUMENT` if given blog item ID cannot be converted into ObjectId.
+    // Returns `INTERNAL` if DB operation could not be performed.
     rpc ReadBlog(ReadBlogRequest) returns (ReadBlogResponse) {};
+    
+    // Updates a blog item.
+    // Returns `NOT_FOUND` if the item does not exist.
+    // Returns `INVALID_ARGUMENT` if given blog item ID cannot be converted into ObjectId.
+    // Returns `INTERNAL` if DB operation could not be performed.
     rpc UpdateBlog(UpdateBlogRequest) returns (UpdateBlogResponse) {};
+
+    // Deletes a blog item.
+    // Returns `NOT_FOUND` if the item does not exist.
+    // Returns `INVALID_ARGUMENT` if given blog item ID cannot be converted into ObjectId.
+    // Returns `INTERNAL` if DB operation could not be performed.
+    rpc DeleteBlog(DeleteBlogRequest) returns (google.protobuf.Empty) {};
 }
