@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"io"
 	"log"
 
 	"github.com/rsorage/grpc-go-course/blog/blogpb"
@@ -23,6 +24,7 @@ func main() {
 	// readBlog(c, "6137cbfe24772434d19bc92")
 	// updateBlog(c)
 	// deleteBlog(c)
+	listBlogs(c)
 }
 
 func createBlog(c blogpb.BlogServiceClient) {
@@ -89,4 +91,29 @@ func deleteBlog(c blogpb.BlogServiceClient) {
 	}
 
 	log.Println("Blog item deleted!")
+}
+
+func listBlogs(c blogpb.BlogServiceClient) {
+	log.Println("Listing blog items...")
+
+	stream, err := c.ListBlog(context.Background(), &blogpb.Pageable{})
+	if err != nil {
+		log.Fatalf("Error opening stream: %v", err)
+		return
+	}
+
+	for {
+		res, err := stream.Recv()
+		if err == io.EOF {
+			log.Printf("Server closed stream!")
+			break
+		}
+		if err != nil {
+			log.Fatalf("Error receiving blog items: %v", err)
+			break
+		}
+
+		log.Printf("Receiving blog item: %v\n", res.Blog)
+	}
+
 }

@@ -31,6 +31,36 @@ type blogItem struct {
 	Title    string             `bson:"title,omitempty"`
 }
 
+type Pageable struct {
+	Page int64
+	Size int64
+}
+
+func (p Pageable) GetPage() *int64 {
+	return &p.Size
+}
+
+func (p Pageable) CalcOffset() *int64 {
+	o := (p.Page + int64(1)) * p.Size
+	return &o
+}
+
+func fromPbPageable(pbp *blogpb.Pageable) Pageable {
+	return Pageable{
+		Page: int64(pbp.Page),
+		Size: int64(pbp.Size),
+	}
+
+	// if pbp.Page != nil {
+	// 	p.Page = pbp.Page
+	// }
+
+	// if pbp.Size != nil {
+	// 	p.Size = pbp.Size
+	// }
+
+}
+
 func (blog blogItem) toBlogPb() *blogpb.Blog {
 	return &blogpb.Blog{
 		Id:       blog.ID.Hex(),
@@ -148,6 +178,39 @@ func (*server) DeleteBlog(ctx context.Context, req *blogpb.DeleteBlogRequest) (*
 
 	log.Printf("id='%s' Blog item deleted!", id)
 	return &emptypb.Empty{}, nil
+}
+
+func (*server) ListBlog(pbp *blogpb.Pageable, stream blogpb.BlogService_ListBlogServer) error {
+	p := fromPbPageable(pbp)
+
+	log.Printf("page=%v size=%v Listing blog items...", p.Page, p.Size)
+
+	filter := bson.M{}
+	opts := options.FindOptions{
+		Limit: p.GetPage(),
+		Skip:  p.CalcOffset(),
+	}
+
+	cur, err := collection.Find(context.Background(), filter, &opts)
+	if err != nil {
+		log.Fatalf("Internal MongoDB error: %v", err)
+		return status.Errorf(codes.Internal, fmt.Sprintf("Internal MongoDB error: %v", err))
+	}
+
+	var bis []blogItem
+	if err = cur.All(context.Background(), &bis); err != nil {
+		log.Fatalf("Internal MongoDB error: %v", err)
+		return status.Errorf(codes.Internal, fmt.Sprintf("Error getting blog items: %v", err))
+	}
+	defer cur.Close(context.Background())
+
+	for _, bi := range bis {
+		stream.Send(&blogpb.ListBlogResponse{
+			Blog: bi.toBlogPb(),
+		})
+	}
+
+	return nil
 }
 
 func main() {
